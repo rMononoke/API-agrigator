@@ -187,6 +187,12 @@
                   "additionalProperties": false
                 },
                 "minItems": 0
+              },
+              "reasoning": {
+                "type": "string"
+              },
+              "reasoning_content": {
+                "type": "string"
               }
             },
             "required": ["role"],

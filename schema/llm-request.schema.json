@@ -170,6 +170,17 @@
               "additionalProperties": false
             },
             "minItems": 0
+          },
+          "cache_control": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["ephemeral"],
+                "type": "string"
+              }
+            },
+            "required": ["type"],
+            "additionalProperties": false
           }
         },
         "required": ["role"],
@@ -383,12 +394,15 @@
       "type": "object",
       "properties": {
         "effort": {
-          "enum": ["none", "low", "medium", "high"],
+          "enum": ["none", "minimal", "low", "medium", "high"],
           "type": "string"
         },
         "max_tokens": {
           "type": "integer",
           "minimum": 0
+        },
+        "exclude": {
+          "type": "boolean"
         }
       },
       "required": [],
