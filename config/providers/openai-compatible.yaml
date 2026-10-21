@@ -1,0 +1,107 @@
+providers:
+  - id: "mistral"
+    name: "Mistral AI"
+    base_url: "https://api.mistral.ai/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "MISTRAL_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      max_input_tokens: 128000
+      max_output_tokens: 8192
+
+  - id: "groq"
+    name: "Groq Cloud"
+    base_url: "https://api.groq.com/openai/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "GROQ_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: false
+      max_input_tokens: 131072
+      max_output_tokens: 8192
+
+  - id: "xai"
+    name: "xAI (Grok)"
+    base_url: "https://api.x.ai/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "XAI_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      supports_reasoning: true
+      max_input_tokens: 131072
+      max_output_tokens: 8192
+
+  - id: "together"
+    name: "Together AI"
+    base_url: "https://api.together.xyz/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "TOGETHER_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      max_input_tokens: 65536
+      max_output_tokens: 4096
+
+  - id: "fireworks"
+    name: "Fireworks AI"
+    base_url: "https://api.fireworks.ai/inference/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "FIREWORKS_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      max_input_tokens: 128000
+      max_output_tokens: 8192
+
+  - id: "deepseek"
+    name: "DeepSeek Platform"
+    base_url: "https://api.deepseek.com/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "DEEPSEEK_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: false
+      supports_reasoning: true
+      supports_prompt_caching: true
+      max_input_tokens: 65536
+      max_output_tokens: 8192
+
+  - id: "qwen"
+    name: "Alibaba Cloud (Qwen DashScope)"
+    base_url: "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "DASHSCOPE_API_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      max_input_tokens: 131072
+      max_output_tokens: 8192
+
+  - id: "vllm-local"
+    name: "Self-Hosted vLLM / SGLang"
+    base_url: "http://localhost:8000/v1"
+    auth_header: "Authorization"
+    auth_prefix: "Bearer "
+    secret_ref: "LOCAL_VLLM_KEY"
+    capabilities:
+      supports_streaming: true
+      supports_tools: true
+      supports_vision: true
+      max_input_tokens: 32768
+      max_output_tokens: 4096
