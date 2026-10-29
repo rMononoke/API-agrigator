@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Семинар 1. Формирование команды, устав, роли, границы и паспорт проекта</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #24292e; }
+  h1 { color: #1f497d; border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
+  h2 { color: #2b579a; margin-top: 24px; border-bottom: 1px solid #eaecef; padding-bottom: 0.2em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
+  th { background-color: #f2f5fa; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .badge { background: #28a745; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>Семинар 1. Формирование команды, устав, роли, границы и паспорт проекта</h1>
+<p><strong>Дисциплина:</strong> Программная инженерия · <strong>Группа:</strong> ИД24 · <strong>Проект:</strong> NeuroGateway (ID24_API)</p>
+<p><strong>Тема в базе знаний Сферы:</strong> Формирование проектной команды, распределение ролей, выбор идеи программного продукта и создание паспорта проекта</p>
+<p><strong>Цель:</strong> Сформировать команду, определить исходную постановку сквозного проекта по профилю «Инженерия данных»: проблему, пользователей, данные, ключевые функции и ожидаемый результат.</p>
+
+<h2>1. Паспорт проектной команды</h2>
+<table>
+  <tr><th>Роль</th><th>Исполнитель</th><th>Email</th></tr>
+  <tr><td>Team Lead / Product</td><td>Улитин Максим</td><td>16656@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Architect / Gateway</td><td>Ерофеев Илья</td><td>16625@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Integrations / Contracts</td><td>Маркус Филипп</td><td>16650@saas.sferaplatform.ru</td></tr>
+  <tr><td>Financial & Ledger Engineer</td><td>Деревцов Андрей</td><td>16582@saas.sferaplatform.ru</td></tr>
+</table>
+
+<h2>2. Задачи в трекере «Сфера SaaS»</h2>
+<table>
+  <tr><th>Код</th><th>Ответственный</th><th>Название</th><th>Статус</th></tr>
+  <tr><td><strong>ID24_API-5</strong></td><td>Улитин Максим</td><td>E00-01 · Регламент работы команды: спринты, DoR/DoD, workflow задач в Сфере</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-6</strong></td><td>Улитин Максим</td><td>E00-02 · Конкурентный анализ: OpenRouter, AITUNNEL, GenAPI, ProxyAPI, VseGPT, BotHub</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-7</strong></td><td>Улитин Максим</td><td>E00-03 · PRD v1: персоны, сценарии, границы MVP / Beta / GA</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-8</strong></td><td>Деревцов Андрей</td><td>E00-04 · Юнит-экономика и модель ценообразования</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-9</strong></td><td>Улитин Максим</td><td>E00-05 · Нейминг и бренд: название, домены, проверка товарного знака</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-10</strong></td><td>Улитин Максим</td><td>E00-06 · Дорожная карта и критерии выхода каждой фазы</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-13</strong></td><td>Улитин Максим</td><td>E01-01 · Договорная схема с поставщиками моделей, анализ ToS, санкционных и экспортных ограничений</td><td><span class="badge">Выполнено</span></td></tr>
+</table>
+
+<h2>3. Вклад участников команды</h2>
+<ul>
+  <li><strong>Улитин Максим (Team Lead):</strong> Организовал команду, сформировал рабочее пространство в «Сфере», провёл всесторонний бенчмаркинг 6 конкурентов (OpenRouter, ProxyAPI и др.), разработал Product Requirements Document (PRD v1) с определением ключевых персон (AI-стартап, корпоративный клиент, соло-разработчик). Зарегистрировал бренд NeuroGateway и разработал дорожную карту с критериями фаз.</li><li><strong>Ерофеев Илья (Lead Architect):</strong> Определил технические границы системы: ядро Data Plane, контур авторизации, пул соединений к моделям и систему логирования usage без сохранения персональных данных.</li><li><strong>Маркус Филипп (Lead Integrations):</strong> Сформировал границы стрима Model Adapters & Contracts в Уставе проекта (docs/seminar-05/01-ustav.md). Выделил In-Scope задачи: канонический формат запросов, потоковый SSE-вывод, нормализация ошибок и извлечение счётчиков токенов.</li><li><strong>Деревцов Андрей (Financial & Data):</strong> Разработал первичную финансовую модель и юнит-экономику шлюза: маржинальность перепродажи токенов, модель ценообразования с фиксацией спреда к курсу ЦБ РФ и структуру затрат на инфраструктуру.</li>
+</ul>
+
+<h2>4. Реализованные артефакты</h2>
+<ul>
+  <li>Паспорт проекта: Паспорт_проекта_API_агрегатор_NeuroGateway_2.pdf (опубликован в базе знаний Сферы id=682).</li><li>Устав проекта и стрима адаптеров: docs/seminar-05/01-ustav.md.</li><li>Дорожная карта релиза: фаза F0 (фундамент), F1 (MVP), F2 (Beta), F3 (GA).</li>
+</ul>
+
+<h2>5. Заключение (DoD)</h2>
+<p>Все критерии приёмки Definition of Done выполнены. Код отправлен в репозиторий <a href="https://github.com/rMononoke/API-agrigator">rMononoke/API-agrigator</a>.</p>
+</body>
+</html>
