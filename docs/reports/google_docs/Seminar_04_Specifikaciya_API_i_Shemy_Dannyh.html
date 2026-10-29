@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Семинар 4. Спецификация API, структуры данных, OpenAPI и критерии приёмки</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #24292e; }
+  h1 { color: #1f497d; border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
+  h2 { color: #2b579a; margin-top: 24px; border-bottom: 1px solid #eaecef; padding-bottom: 0.2em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
+  th { background-color: #f2f5fa; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .badge { background: #28a745; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>Семинар 4. Спецификация API, структуры данных, OpenAPI и критерии приёмки</h1>
+<p><strong>Дисциплина:</strong> Программная инженерия · <strong>Группа:</strong> ИД24 · <strong>Проект:</strong> NeuroGateway (ID24_API)</p>
+<p><strong>Тема в базе знаний Сферы:</strong> FR/NFR, требования к данным, спецификация API, схемы структур данных, проверка типов и форматов, канонические схемы</p>
+<p><strong>Цель:</strong> Сформировать проверяемую спецификацию контрактов данных публичного и внутреннего API, разработать схемы валидации запросов и ответов.</p>
+
+<h2>1. Паспорт проектной команды</h2>
+<table>
+  <tr><th>Роль</th><th>Исполнитель</th><th>Email</th></tr>
+  <tr><td>Team Lead / Product</td><td>Улитин Максим</td><td>16656@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Architect / Gateway</td><td>Ерофеев Илья</td><td>16625@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Integrations / Contracts</td><td>Маркус Филипп</td><td>16650@saas.sferaplatform.ru</td></tr>
+  <tr><td>Financial & Ledger Engineer</td><td>Деревцов Андрей</td><td>16582@saas.sferaplatform.ru</td></tr>
+</table>
+
+<h2>2. Задачи в трекере «Сфера SaaS»</h2>
+<table>
+  <tr><th>Код</th><th>Ответственный</th><th>Название</th><th>Статус</th></tr>
+  <tr><td><strong>ID24_API-24</strong></td><td>Маркус Филипп</td><td>E02-04 · Каноническая схема LLM-запроса и ответа (Unified LLM Schema)</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-25</strong></td><td>Ерофеев Илья</td><td>E02-05 · Спецификация публичного API (OpenAPI 3.1)</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-26</strong></td><td>Ерофеев Илья</td><td>E02-06 · Модель данных PostgreSQL (ERD) и стратегия миграций</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-60</strong></td><td>Маркус Филипп</td><td>E04-14 · Reasoning: единый параметр и учёт reasoning-токенов</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-62</strong></td><td>Маркус Филипп</td><td>E04-16 · Prompt caching: cache_control, учёт cached и cache write токенов</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-93</strong></td><td>Деревцов Андрей</td><td>E07-01 · Double-entry ledger в PostgreSQL</td><td><span class="badge">Выполнено</span></td></tr>
+</table>
+
+<h2>3. Вклад участников команды</h2>
+<ul>
+  <li><strong>Маркус Филипп (Lead Integrations):</strong> Спроектировал и утвердил каноническую спецификацию Unified LLM Schema (schema/llm-request.schema.json и schema/llm-response.schema.json). Реализовал поддержку передовых возможностей 2026 года: единый параметр reasoning {effort: minimal|low|medium|high, max_tokens, exclude} (ID24_API-60) и директиву prompt caching cache_control: {type: 'ephemeral'} с алгоритмом sticky routing (ID24_API-62).</li><li><strong>Ерофеев Илья (Lead Architect):</strong> Разработал полную спецификацию публичного HTTP API шлюза в стандарте OpenAPI 3.1 (ID24_API-25), охватывающую /v1/chat/completions, /v1/models, /v1/responses. Спроектировал реляционную модель базы данных PostgreSQL (ERD) с версионированием миграций golang-migrate (ID24_API-26).</li><li><strong>Деревцов Андрей (Financial & Data):</strong> Спроектировал реляционную схему бухгалтерского учёта с двойной записью (ID24_API-93): таблицы accounts, ledger_entries, transactions, currency_rates с проверкой инварианта сбалансированности проводок.</li><li><strong>Улитин Максим (Team Lead):</strong> Провёл ревью контрактов данных на соответствие требованиям продуктовых сценариев и критериям совместимости с OpenAI Python/Node.js SDK.</li>
+</ul>
+
+<h2>4. Реализованные артефакты</h2>
+<ul>
+  <li>Канонические схемы: schema/llm-request.schema.json и schema/llm-response.schema.json.</li><li>Спецификация OpenAPI 3.1 публичного шлюза: openapi.yaml.</li><li>Схема базы данных PostgreSQL: ERD-диаграмма и SQL-миграции.</li><li>Модули Go: packages/contracts/reasoning/ и packages/contracts/caching/.</li>
+</ul>
+
+<h2>5. Заключение (DoD)</h2>
+<p>Все критерии приёмки Definition of Done выполнены. Код отправлен в репозиторий <a href="https://github.com/rMononoke/API-agrigator">rMononoke/API-agrigator</a>.</p>
+</body>
+</html>

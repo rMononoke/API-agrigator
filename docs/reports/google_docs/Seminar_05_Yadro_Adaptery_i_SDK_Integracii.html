@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Семинар 5. Реализация ядра, интеграция провайдеров и SDK адаптеров</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #24292e; }
+  h1 { color: #1f497d; border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
+  h2 { color: #2b579a; margin-top: 24px; border-bottom: 1px solid #eaecef; padding-bottom: 0.2em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
+  th { background-color: #f2f5fa; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .badge { background: #28a745; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>Семинар 5. Реализация ядра, интеграция провайдеров и SDK адаптеров</h1>
+<p><strong>Дисциплина:</strong> Программная инженерия · <strong>Группа:</strong> ИД24 · <strong>Проект:</strong> NeuroGateway (ID24_API)</p>
+<p><strong>Тема в базе знаний Сферы:</strong> Управление разработкой ПО. Проектное управление. Реализация ядра, паттерны интеграции (Adapter, Registry), боевые адаптеры провайдеров, документация</p>
+<p><strong>Цель:</strong> Оформить проект как управляемый программный комплекс, реализовать ядро шлюза и слой адаптеров ко всем целевым LLM-провайдерам.</p>
+
+<h2>1. Паспорт проектной команды</h2>
+<table>
+  <tr><th>Роль</th><th>Исполнитель</th><th>Email</th></tr>
+  <tr><td>Team Lead / Product</td><td>Улитин Максим</td><td>16656@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Architect / Gateway</td><td>Ерофеев Илья</td><td>16625@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Integrations / Contracts</td><td>Маркус Филипп</td><td>16650@saas.sferaplatform.ru</td></tr>
+  <tr><td>Financial & Ledger Engineer</td><td>Деревцов Андрей</td><td>16582@saas.sferaplatform.ru</td></tr>
+</table>
+
+<h2>2. Задачи в трекере «Сфера SaaS»</h2>
+<table>
+  <tr><th>Код</th><th>Ответственный</th><th>Название</th><th>Статус</th></tr>
+  <tr><td><strong>ID24_API-68</strong></td><td>Маркус Филипп</td><td>E05-01 · SDK адаптеров провайдеров: интерфейс, регистрация, capabilities</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-69</strong></td><td>Маркус Филипп</td><td>E05-02 · Адаптер OpenAI: Chat Completions, Responses, vision, tools, reasoning</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-70</strong></td><td>Маркус Филипп</td><td>E05-03 · Адаптер Anthropic: Messages API, thinking, cache_control, tools</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-74</strong></td><td>Маркус Филипп</td><td>E05-07 · Generic OpenAI-compatible адаптер: подключение провайдеров конфигурацией</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-93</strong></td><td>Деревцов Андрей</td><td>E07-01 · Double-entry ledger в PostgreSQL</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-95</strong></td><td>Деревцов Андрей</td><td>E07-03 · Предавторизация баланса (hold) перед запросом</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-97</strong></td><td>Деревцов Андрей</td><td>E07-05 · Курсы валют: импорт курса ЦБ РФ, спред, фиксация в проводке</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-98</strong></td><td>Деревцов Андрей</td><td>E07-06 · Пополнение баланса — заглушка для MVP</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-156</strong></td><td>Маркус Филипп</td><td>E12-05 · Гайды по интеграциям с популярными инструментами</td><td><span class="badge">Выполнено</span></td></tr>
+</table>
+
+<h2>3. Вклад участников команды</h2>
+<ul>
+  <li><strong>Маркус Филипп (Lead Integrations):</strong> Создал фундаментальный SDK адаптеров: интерфейс ProviderAdapter и реестр Registry (packages/contracts/adapter/adapter.go). Разработал адаптер OpenAI с поддержкой Azure и парсингом лимитов (internal/adapters/openai/). Разработал адаптер Anthropic Messages API с нормализацией системных промптов (internal/adapters/anthropic/). Реализовал Generic-адаптер, декларативно подключающий 8 провайдеров через YAML (Mistral, Groq, xAI, Together, Fireworks, DeepSeek, Qwen, vLLM). Написал исчерпывающий гайд по интеграции для 16 инструментов (docs/guides/integrations.md).</li><li><strong>Ерофеев Илья (Lead Architect):</strong> Разработал ядро обратного проксирования (Reverse Proxy) и DevServer, механизм динамической диспетчеризации запросов к зарегистрированным адаптерам и оркестрацию горутин при потоковом SSE-стриминге.</li><li><strong>Деревцов Андрей (Financial & Data):</strong> Реализовал финансовый движок биллинга: механизм атомарного холдирования средств (ID24_API-95), интеграцию с сервисом котировок валют ЦБ РФ со спредом 3% (ID24_API-97) и подтверждение списания после завершения генерации.</li><li><strong>Улитин Максим (Team Lead):</strong> Провёл интеграционное тестирование всего вертикального среза Release 0.5 на соответствие срокам и критериям фазы MVP.</li>
+</ul>
+
+<h2>4. Реализованные артефакты</h2>
+<ul>
+  <li>Adapter SDK и реестр: packages/contracts/adapter/adapter.go.</li><li>Боевые адаптеры: internal/adapters/openai/, internal/adapters/anthropic/, internal/adapters/generic/.</li><li>Конфигурация 8 провайдеров: config/providers/openai-compatible.yaml.</li><li>Сводное руководство по интеграциям (16 инструментов): docs/guides/integrations.md.</li>
+</ul>
+
+<h2>5. Заключение (DoD)</h2>
+<p>Все критерии приёмки Definition of Done выполнены. Код отправлен в репозиторий <a href="https://github.com/rMononoke/API-agrigator">rMononoke/API-agrigator</a>.</p>
+</body>
+</html>

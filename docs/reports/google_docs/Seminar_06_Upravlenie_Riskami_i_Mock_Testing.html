@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Семинар 6. Управление рисками программного проекта (Risk Management)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #24292e; }
+  h1 { color: #1f497d; border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
+  h2 { color: #2b579a; margin-top: 24px; border-bottom: 1px solid #eaecef; padding-bottom: 0.2em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
+  th { background-color: #f2f5fa; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .badge { background: #28a745; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>Семинар 6. Управление рисками программного проекта (Risk Management)</h1>
+<p><strong>Дисциплина:</strong> Программная инженерия · <strong>Группа:</strong> ИД24 · <strong>Проект:</strong> NeuroGateway (ID24_API)</p>
+<p><strong>Тема в базе знаний Сферы:</strong> Управление разработкой ПО. Проектное управление. Выявление, оценка и контроль рисков, матрица вероятности и последствий, стратегии снижения, стресс-тестирование отказов</p>
+<p><strong>Цель:</strong> Научиться выявлять, оценивать и купировать проектные и технические риски, разработать меры митигации и подтвердить устойчивость системы автотестами отказов.</p>
+
+<h2>1. Паспорт проектной команды</h2>
+<table>
+  <tr><th>Роль</th><th>Исполнитель</th><th>Email</th></tr>
+  <tr><td>Team Lead / Product</td><td>Улитин Максим</td><td>16656@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Architect / Gateway</td><td>Ерофеев Илья</td><td>16625@saas.sferaplatform.ru</td></tr>
+  <tr><td>Lead Integrations / Contracts</td><td>Маркус Филипп</td><td>16650@saas.sferaplatform.ru</td></tr>
+  <tr><td>Financial & Ledger Engineer</td><td>Деревцов Андрей</td><td>16582@saas.sferaplatform.ru</td></tr>
+</table>
+
+<h2>2. Задачи в трекере «Сфера SaaS»</h2>
+<table>
+  <tr><th>Код</th><th>Ответственный</th><th>Название</th><th>Статус</th></tr>
+  <tr><td><strong>ID24_API-206</strong></td><td>Маркус Филипп</td><td>R05/R06/R07 · Контрактные тесты отказов провайдера и качества usage</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-178</strong></td><td>Команда</td><td>E15-01 · Тестовая стратегия и критерии качества релиза</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-182</strong></td><td>Деревцов Андрей</td><td>E15-05 · Тесты корректности биллинга и ledger</td><td><span class="badge">Выполнено</span></td></tr><tr><td><strong>ID24_API-13</strong></td><td>Улитин Максим</td><td>E01-01 · Договорная схема с поставщиками моделей, анализ ToS, санкционных и экспортных ограничений</td><td><span class="badge">Выполнено</span></td></tr>
+</table>
+
+<h2>3. Вклад участников команды</h2>
+<ul>
+  <li><strong>Маркус Филипп (Lead Integrations):</strong> Идентифицировал и купировал 3 критических технических риска: R05 (недоступность сторонних API — 429 Rate Limit, 5xx), R06 (искажённый usage и отрицательные токены), R07 (дрейф контрактов внешних API). Спроектировал собственный Mock Provider (internal/mockprovider/handler.go) с контролируемой генерацией отказов. Разработал 16 контрактных автотестов (tests/contracts.test.mjs), подтвердивших 100% отсечку аномалий.</li><li><strong>Деревцов Андрей (Financial & Data):</strong> Купировал финансовые риски: предотвратил двойное списание средств при сбоях сети, овердрафт баланса и ошибки округления при конвертации валют (ID24_API-182). Разработал модульные тесты транзакционной целостности бухгалтерского леджера.</li><li><strong>Ерофеев Илья (Lead Architect):</strong> Сформировал сводную тестовую стратегию проекта (ID24_API-178), настроил автоматический запуск тестов в CI/CD пайплайне и определил критерии Quality Gates для релиза.</li><li><strong>Улитин Максим (Team Lead):</strong> Провёл юридическую и санкционную экспертизу соглашений с поставщиками (OpenAI, Anthropic Terms of Service), сформировал план действий при блокировке платёжных аккаунтов или отзыве API-ключей (ID24_API-13).</li>
+</ul>
+
+<h2>4. Реализованные артефакты</h2>
+<ul>
+  <li>Реестр рисков R05/R06/R07 с матрицей критичности P x I = S: docs/delivery/tasks/ID24_API-206.md.</li><li>Mock-сервер эмуляции сбоев и сетевых отказов: internal/mockprovider/handler.go.</li><li>Тестовый комплекс стресс-валидации (16 автотестов): tests/contracts.test.mjs.</li><li>Тестовая стратегия релиза: docs/delivery/tasks/ID24_API-178.md.</li>
+</ul>
+
+<h2>5. Заключение (DoD)</h2>
+<p>Все критерии приёмки Definition of Done выполнены. Код отправлен в репозиторий <a href="https://github.com/rMononoke/API-agrigator">rMononoke/API-agrigator</a>.</p>
+</body>
+</html>
